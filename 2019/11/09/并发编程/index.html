@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>categories | Hexo</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="categories | Hexo">
+  <title>并发编程 | Hexo</title>
+  <meta name="keywords" content=" 并发 ">
+  <meta name="description" content="并发编程 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="categories">
@@ -259,19 +259,31 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <article id="post-并发编程" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">categories</h1>
+        <h1 class="article-title">并发编程</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a href="javascript:" target="_blank" data-rel="JAVA noopener">JAVA</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="javascript:" target="_blank" rel="noopener" class="color3">并发</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-09 18:32:42'>2019-11-09 16:45</time>
+        创建时间:<time class="date" title='更新时间: 2019-11-09 21:16:39'>2019-11-09 20:59</time>
         
     </div>
     <div class="article-meta">
@@ -293,7 +305,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#JUC包-java-util-concurrent"><span class="toc-text">JUC包 java.util.concurrent</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CountDownLatch"><span class="toc-text">CountDownLatch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CycleBarrier-内存屏障"><span class="toc-text">CycleBarrier 内存屏障</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Semaphore-信号量"><span class="toc-text">Semaphore 信号量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ConcurrentHashMap-并发map"><span class="toc-text">ConcurrentHashMap  并发map</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BlockingQueue-阻塞队列"><span class="toc-text">BlockingQueue 阻塞队列</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -309,7 +321,25 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="JUC包-java-util-concurrent"><a href="#JUC包-java-util-concurrent" class="headerlink" title="JUC包 java.util.concurrent"></a>JUC包 java.util.concurrent</h3><h4 id="CountDownLatch"><a href="#CountDownLatch" class="headerlink" title="CountDownLatch"></a><strong>CountDownLatch</strong></h4><ul>
+<li>当指定数量的线程执行完后，新线程才进行后面的操作</li>
+<li>不可复用，用完即止</li>
+</ul>
+<h4 id="CycleBarrier-内存屏障"><a href="#CycleBarrier-内存屏障" class="headerlink" title="CycleBarrier 内存屏障"></a><strong>CycleBarrier 内存屏障</strong></h4><ul>
+<li>当指定数量的线程执行完后，再一起接着执行</li>
+<li>可复用，一批一批的，类似有扇门，当门口等待数达到阈值，才开门，放这批进去，然后关门等下一批</li>
+<li>可用于限流</li>
+</ul>
+<h4 id="Semaphore-信号量"><a href="#Semaphore-信号量" class="headerlink" title="Semaphore 信号量"></a><strong>Semaphore 信号量</strong></h4><ul>
+<li>类似令牌，一个个的申请</li>
+</ul>
+<h4 id="ConcurrentHashMap-并发map"><a href="#ConcurrentHashMap-并发map" class="headerlink" title="ConcurrentHashMap  并发map"></a><strong>ConcurrentHashMap  并发map</strong></h4><ul>
+<li>根据key的hash值来进行分桶，形成一个桶数组，每个桶里面有个链表，存储kv对象</li>
+<li>分段锁机制，每个桶有一把锁，当有并发修改时，同一个桶的才会竞争锁，不同桶获取的是不同的锁</li>
+<li>key和value都不允许为null，key为null没办法确定哪个桶</li>
+<li>jdk8引入红黑树，当链表长度达到8时，链表转换为红黑树</li>
+</ul>
+<h4 id="BlockingQueue-阻塞队列"><a href="#BlockingQueue-阻塞队列" class="headerlink" title="BlockingQueue 阻塞队列"></a><strong>BlockingQueue 阻塞队列</strong></h4>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎一起讨论 </span>
     </div>

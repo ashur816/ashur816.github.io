@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>categories | Hexo</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="categories | Hexo">
+  <title>线程池 | Hexo</title>
+  <meta name="keywords" content=" Thread ">
+  <meta name="description" content="线程池 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="categories">
@@ -259,19 +259,31 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <article id="post-线程池" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">categories</h1>
+        <h1 class="article-title">线程池</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a href="javascript:" target="_blank" data-rel="JAVA noopener">JAVA</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="javascript:" target="_blank" rel="noopener" class="color2">Thread</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-09 18:32:42'>2019-11-09 16:45</time>
+        创建时间:<time class="date" title='更新时间: 2019-11-09 20:44:26'>2019-11-09 20:25</time>
         
     </div>
     <div class="article-meta">
@@ -293,7 +305,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#主要参数"><span class="toc-text">主要参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#处理过程"><span class="toc-text">处理过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等待队列"><span class="toc-text">等待队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见线程池"><span class="toc-text">常见线程池</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -309,7 +321,46 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="主要参数"><a href="#主要参数" class="headerlink" title="主要参数"></a><strong>主要参数</strong></h3><ul>
+<li>核心线程数<ul>
+<li>主要工作者，类似于正式员工，可以不初始化，也可以在线程池启动时一次性创建</li>
+</ul>
+</li>
+<li>最大线程数<ul>
+<li>线程池中允许存在的最大数</li>
+</ul>
+</li>
+<li>等待时间<ul>
+<li>在等待队列中存活时间</li>
+</ul>
+</li>
+<li>拒绝策略<ul>
+<li>如果已经达到最大线程数，并且等待队列满了，新的请求如何处理<ul>
+<li>直接丢弃，不报异常</li>
+<li>直接丢弃，抛出异常</li>
+<li>删除队列中老的请求</li>
+<li>使用现有的线程来处理，插队</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="处理过程"><a href="#处理过程" class="headerlink" title="处理过程"></a><strong>处理过程</strong></h3><p>当有请求过来时：</p>
+<ul>
+<li>如果 当前线程数&lt;核心线程数，则创建新线程去处理当前请求</li>
+<li>如果 核心线程数&lt;当前线程数&lt;最大线程数，则将请求放到等待队列中，如果等待队列已满，则增加处理线程，去处理等待队列中请求</li>
+<li>如果 当前线程数 = 最大线程数，队列已满，则根据拒绝策略去处理当前请求</li>
+</ul>
+<h3 id="等待队列"><a href="#等待队列" class="headerlink" title="等待队列"></a><strong>等待队列</strong></h3><ul>
+<li>有界队列，</li>
+</ul>
+<h3 id="常见线程池"><a href="#常见线程池" class="headerlink" title="常见线程池"></a><strong>常见线程池</strong></h3><ul>
+<li>FixedThreadPoool      固定线程数线程池</li>
+<li>CachedThreadPool         缓存线程池</li>
+<li>ScheduleThreadPool    计划线程池</li>
+<li></li>
+</ul>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎一起讨论 </span>
     </div>
