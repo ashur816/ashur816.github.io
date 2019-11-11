@@ -115,7 +115,7 @@
 
 
 <ul>
-    <li><div class="all active">全部文章<small>(6)</small></div></li>
+    <li><div class="all active">全部文章<small>(7)</small></div></li>
     
         
             
@@ -143,7 +143,7 @@
     </div>
     <div><a  class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="6">
+<input type="hidden" id="yelog_site_posts_number" value="7">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -205,6 +205,14 @@
            data-author="" >
             <span class="post-title" title="JAVA关键字">JAVA关键字</span>
             <span class="post-date" title="2019-11-09 20:45:44">2019/11/09</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/11/10/JAVA%E8%BF%90%E8%A1%8C%E6%97%B6%E5%86%85%E5%AD%98/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="JAVA运行时内存">JAVA运行时内存</span>
+            <span class="post-date" title="2019-11-10 19:03:12">2019/11/10</span>
         </a>
         
         <a  class="JAVA "
@@ -283,7 +291,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-09 21:22:58'>2019-11-09 21:17</time>
+        创建时间:<time class="date" title='更新时间: 2019-11-10 19:37:43'>2019-11-09 21:17</time>
         
     </div>
     <div class="article-meta">
@@ -305,7 +313,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-Memory-Model"><span class="toc-text">Java Memory Model</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于物理内存的"><span class="toc-text">基于物理内存的</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#主要构造"><span class="toc-text">主要构造</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于JVM内存管理"><span class="toc-text">基于JVM内存管理</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU缓存结构"><span class="toc-text">CPU缓存结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA内存模型"><span class="toc-text">JAVA内存模型</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -321,14 +329,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Java-Memory-Model"><a href="#Java-Memory-Model" class="headerlink" title="Java Memory Model"></a>Java Memory Model</h2><h3 id="基于物理内存的"><a href="#基于物理内存的" class="headerlink" title="基于物理内存的"></a>基于物理内存的</h3><h4 id="主要构造"><a href="#主要构造" class="headerlink" title="主要构造"></a><strong>主要构造</strong></h4><ul>
-<li>主存和缓存</li>
+        <h3 id="CPU缓存结构"><a href="#CPU缓存结构" class="headerlink" title="CPU缓存结构"></a>CPU缓存结构</h3><p>cpu缓存是介于CPU与内存之间的数据临时交换器，为了解决CPU处理速度和内存读写速度不匹配的矛盾<br><img src="/images/pasted-0.png" alt="CPU缓存"><br>L1,L2,L3三级缓存目前都是集成在CPU中，速度L1&gt;L2&gt;L3,容量L1&lt;L2&lt;L3，CPU查找数据优先级L1&gt;L2&gt;L3&gt;内存,每个缓存都是为上一级缓存做缓冲</p>
+<ul>
+<li>L1i一级指令缓存</li>
+<li>L1d一级数据缓存<br>参考链接：<a href="http://baijiahao.baidu.com/s?id=1598811284058671259" target="_blank" rel="noopener">http://baijiahao.baidu.com/s?id=1598811284058671259</a></li>
 </ul>
-<h3 id="基于JVM内存管理"><a href="#基于JVM内存管理" class="headerlink" title="基于JVM内存管理"></a>基于JVM内存管理</h3><ul>
-<li>新生代</li>
-<li>老年代</li>
-<li></li>
-</ul>
+<h3 id="JAVA内存模型"><a href="#JAVA内存模型" class="headerlink" title="JAVA内存模型"></a>JAVA内存模型</h3><p>JMM定义了JVM在计算机内存RAM中的工作方式</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎一起讨论 </span>
