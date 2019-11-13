@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>JAVA运行时内存 | Hexo</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="JAVA运行时内存 | Hexo">
+  <title>Zookeeper工作原理 | Hexo</title>
+  <meta name="keywords" content=" Zookeeper ">
+  <meta name="description" content="Zookeeper工作原理 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="categories">
@@ -327,19 +327,31 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA运行时内存" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Zookeeper工作原理" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">JAVA运行时内存</h1>
+        <h1 class="article-title">Zookeeper工作原理</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a href="javascript:" target="_blank" data-rel="分布式系统 noopener">分布式系统</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="javascript:" target="_blank" rel="noopener" class="color5">Zookeeper</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-10 19:04:50'>2019-11-10 19:03</time>
+        创建时间:<time class="date" title='更新时间: 2019-11-13 15:17:58'>2019-11-12 21:08</time>
         
     </div>
     <div class="article-meta">
@@ -361,7 +373,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#运行时内存分布"><span class="toc-text">运行时内存分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#堆的组成"><span class="toc-text">堆的组成</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#角色"><span class="toc-text">角色</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设计目的"><span class="toc-text">设计目的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#工作原理"><span class="toc-text">工作原理</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -377,17 +389,39 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="运行时内存分布"><a href="#运行时内存分布" class="headerlink" title="运行时内存分布"></a>运行时内存分布</h3><ul>
-<li>程序计数器 用来记录指令执行的行数</li>
-<li>JVM栈 线程运行时执行过程，入栈和出栈</li>
-<li>本地方法栈 用来执行native方法</li>
-<li>堆 存储对象 1.8以上加入常量池</li>
-<li>方法区(&lt;1.8) 元数据(&gt;1.8)</li>
-</ul>
-<h3 id="堆的组成"><a href="#堆的组成" class="headerlink" title="堆的组成"></a>堆的组成</h3><ul>
-<li>新生代eden</li>
-<li>老年代old</li>
-<li>持久代perm</li>
+        <h4 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h4><table>
+<thead>
+<tr>
+<th>角色</th>
+<th></th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>领导者(Leader)</td>
+<td></td>
+<td>负责投票的发起和决议，更新系统状态</td>
+</tr>
+<tr>
+<td>学习者(Learner)</td>
+<td>跟随者(Follower)</td>
+<td>用于接收客户端请求，并返回结果，参与选主投票</td>
+</tr>
+<tr>
+<td></td>
+<td>观察者(Observber)</td>
+<td>可以接收客户端请求，将写操作转发给Leader，不参与选主投票，只同步leader状态，主要是为了扩展系统，提高读取速度</td>
+</tr>
+<tr>
+<td>客户端(Client)</td>
+<td></td>
+<td>请求发起方</td>
+</tr>
+</tbody></table>
+<h4 id="设计目的"><a href="#设计目的" class="headerlink" title="设计目的"></a>设计目的</h4><p>1、最终一致性：client不管连哪个server，都是给他同样的数据<br>2、可靠性：消息被一台server接受，那将被集群中所有的server接受<br>3、实时性：保证客户端在一个时间范围内，获取到服务器更新活失效信息，但是不保证两个客户端能同时得到刚更新的信息，需要自己调用sync()接口<br>4、等待无关：慢的client或者失效client不会干预到快的client请求<br>5、原子性：更新只能成功或者失败，不存在中间状态<br>6、顺序性：包括全局有序和偏序：全局有序是指如果一台服务器上消息a在消息b前发布，那在集群中其他server消息也是a在b之前发布，偏序是指一个消息b在消息a后被同一个发送者发布，a必排在b之前</p>
+<h4 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h4><ul>
+<li>原子广播：核心机制，保证各个server之间消息同步，由Zab协议实现</li>
+<li>Zab协议：恢复模式(选主)和广播模式(同步)，当服务启动或leader崩溃，集群进入恢复模式，当leader被选举出来，且大多数server完成了和leader的同步，恢复模式结束</li>
 </ul>
 
       

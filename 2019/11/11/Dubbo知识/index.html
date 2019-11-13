@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>JAVA运行时内存 | Hexo</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="JAVA运行时内存 | Hexo">
+  <title>Dubbo知识 | Hexo</title>
+  <meta name="keywords" content=" Dubbo ">
+  <meta name="description" content="Dubbo知识 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="categories">
@@ -327,19 +327,31 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA运行时内存" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Dubbo知识" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">JAVA运行时内存</h1>
+        <h1 class="article-title">Dubbo知识</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a href="javascript:" target="_blank" data-rel="分布式系统 noopener">分布式系统</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="javascript:" target="_blank" rel="noopener" class="color1">Dubbo</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-10 19:04:50'>2019-11-10 19:03</time>
+        创建时间:<time class="date" title='更新时间: 2019-11-12 21:04:33'>2019-11-11 23:02</time>
         
     </div>
     <div class="article-meta">
@@ -361,7 +373,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#运行时内存分布"><span class="toc-text">运行时内存分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#堆的组成"><span class="toc-text">堆的组成</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#底层原理"><span class="toc-text">底层原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化细节"><span class="toc-text">初始化细节</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -377,17 +389,39 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="运行时内存分布"><a href="#运行时内存分布" class="headerlink" title="运行时内存分布"></a>运行时内存分布</h3><ul>
-<li>程序计数器 用来记录指令执行的行数</li>
-<li>JVM栈 线程运行时执行过程，入栈和出栈</li>
-<li>本地方法栈 用来执行native方法</li>
-<li>堆 存储对象 1.8以上加入常量池</li>
-<li>方法区(&lt;1.8) 元数据(&gt;1.8)</li>
+        <h2 id="底层原理"><a href="#底层原理" class="headerlink" title="底层原理"></a>底层原理</h2><p>dubbo是一个分布式服务框架，RPC框架，SOA框架，采用TCP协议通信，</p>
+<ul>
+<li>作为RPC：支持各种传输协议,如：dubbo,hession,json,fastjson,底层采用mina，netty tcp长连接进行传输</li>
+<li>作为SOA：具有服务治理功能，用zookeeper做注册中心，实现服务注册和服务发现</li>
 </ul>
-<h3 id="堆的组成"><a href="#堆的组成" class="headerlink" title="堆的组成"></a>堆的组成</h3><ul>
-<li>新生代eden</li>
-<li>老年代old</li>
-<li>持久代perm</li>
+<p>除了提供服务以外，还实现了软负载，还提供了监控中心和注册中心（可选），在没有注册中心的情况下，是Consumer和Provider是可以直连的</p>
+<p><img src="/images/pasted-1.png" alt="原理图"></p>
+<ul>
+<li>服务提供者启动，注册到注册中心</li>
+<li>消费者会订阅服务，如果没订阅到会不停重试</li>
+<li>有新的生产者提供服务时，注册中心会通知消费者</li>
+<li>消费者通过RPC调用到远端服务</li>
+<li>Monitor是异步监听，Provider和Consumer会将消息存储在本地磁盘，平均每分钟会发送一次信息</li>
+</ul>
+<h2 id="初始化细节"><a href="#初始化细节" class="headerlink" title="初始化细节"></a>初始化细节</h2><ul>
+<li>解析服务<ul>
+<li>基于dubbo.jar中的META_INF/spring.handlers配置，spring在遇到dubbo的命名空间时，会回调DubboNamespaceHandler类</li>
+<li>所有的dubbo标签，都统一用DubboBeanDefinitionParser进行解析，基于一对一属性映射，将XML标签解析为Bean对象</li>
+</ul>
+</li>
+<li>暴露服务<ul>
+<li>只暴露服务端口，用在没有注册中心的情况下，dubbo://service-host/com.xxx.TxxService?version=1.0.0</li>
+<li>向注册中心暴露服务，将ip和端口一起暴露给注册中心，基于扩展点的Adaptive机制，通过URL的“register://”协议头区别<ul>
+<li>registry://registry-host/com.alibaba.dubbo.registry.RegistryService?export=URL.encode(“dubbo://service-host/com.xxx.TxxService?version=1.0.0”)</li>
+</ul>
+</li>
+<li>调用RegisterProtocol的export方法，将export参数中的提供者URL先注册到注册中心，再重新传给protocol扩展点进行暴露，<ul>
+<li>dubbo://service-host/com.xxx.TxxService?version=1.0.0</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>引用服务</li>
 </ul>
 
       

@@ -115,11 +115,27 @@
 
 
 <ul>
-    <li><div class="all active">全部文章<small>(7)</small></div></li>
+    <li><div class="all active">全部文章<small>(11)</small></div></li>
     
         
             
             <li><div data-rel="JAVA">JAVA<small>(3)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="分布式系统">分布式系统<small>(3)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="互联网业务">互联网业务<small>(1)</small></div>
                 
             </li>
             
@@ -143,7 +159,7 @@
     </div>
     <div><a  class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="7">
+<input type="hidden" id="yelog_site_posts_number" value="11">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -178,7 +194,19 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
+        <a href="javascript:" target="_blank" rel="noopener" class="color1">Dubbo</a>
+    </li>
+    
+    <li class="article-tag-list-item">
         <a href="javascript:" target="_blank" rel="noopener" class="color3">内存</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" target="_blank" rel="noopener" class="color5">zookeeper</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" target="_blank" rel="noopener" class="color5">Zookeeper</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -198,6 +226,14 @@
 
     
     <nav id="title-list-nav">
+        
+        <a  class="分布式系统 "
+           href="/2019/11/11/Dubbo%E7%9F%A5%E8%AF%86/"
+           data-tag="Dubbo"
+           data-author="" >
+            <span class="post-title" title="Dubbo知识">Dubbo知识</span>
+            <span class="post-date" title="2019-11-11 23:02:00">2019/11/11</span>
+        </a>
         
         <a  class=""
            href="/2019/11/09/JAVA%E5%85%B3%E9%94%AE%E5%AD%97/"
@@ -223,12 +259,36 @@
             <span class="post-date" title="2019-11-09 21:17:00">2019/11/09</span>
         </a>
         
+        <a  class="分布式系统 "
+           href="/2019/11/12/Zookeeper%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"
+           data-tag="zookeeper"
+           data-author="" >
+            <span class="post-title" title="Zookeeper基础知识">Zookeeper基础知识</span>
+            <span class="post-date" title="2019-11-12 00:50:00">2019/11/12</span>
+        </a>
+        
+        <a  class="分布式系统 "
+           href="/2019/11/12/Zookeeper%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"
+           data-tag="Zookeeper"
+           data-author="" >
+            <span class="post-title" title="Zookeeper工作原理">Zookeeper工作原理</span>
+            <span class="post-date" title="2019-11-12 21:08:00">2019/11/12</span>
+        </a>
+        
         <a  class="JAVA "
            href="/2019/11/09/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"
            data-tag="并发"
            data-author="" >
             <span class="post-title" title="并发编程">并发编程</span>
             <span class="post-date" title="2019-11-09 20:59:00">2019/11/09</span>
+        </a>
+        
+        <a  class="互联网业务 "
+           href="/2019/11/11/%E5%B9%BF%E5%91%8A%E8%A1%8C%E4%B8%9A/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="广告行业">广告行业</span>
+            <span class="post-date" title="2019-11-11 17:00:00">2019/11/11</span>
         </a>
         
         <a  class="LINUX "
@@ -337,7 +397,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#内存','#并发','#命令','#Thread',],
+            'data': ['#Dubbo','#内存','#zookeeper','#Zookeeper','#并发','#命令','#Thread',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');

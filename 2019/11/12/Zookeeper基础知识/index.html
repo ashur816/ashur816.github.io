@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>JAVA运行时内存 | Hexo</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="JAVA运行时内存 | Hexo">
+  <title>Zookeeper基础知识 | Hexo</title>
+  <meta name="keywords" content=" zookeeper ">
+  <meta name="description" content="Zookeeper基础知识 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="categories">
@@ -327,19 +327,31 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA运行时内存" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Zookeeper基础知识" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">JAVA运行时内存</h1>
+        <h1 class="article-title">Zookeeper基础知识</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a href="javascript:" target="_blank" data-rel="分布式系统 noopener">分布式系统</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="javascript:" target="_blank" rel="noopener" class="color5">zookeeper</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-10 19:04:50'>2019-11-10 19:03</time>
+        创建时间:<time class="date" title='更新时间: 2019-11-12 21:03:22'>2019-11-12 00:50</time>
         
     </div>
     <div class="article-meta">
@@ -361,7 +373,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#运行时内存分布"><span class="toc-text">运行时内存分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#堆的组成"><span class="toc-text">堆的组成</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#节点类型"><span class="toc-text">节点类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#状态信息"><span class="toc-text">状态信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#版本"><span class="toc-text">版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通知机制"><span class="toc-text">通知机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用场景"><span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据复制"><span class="toc-text">数据复制</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -377,18 +389,119 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="运行时内存分布"><a href="#运行时内存分布" class="headerlink" title="运行时内存分布"></a>运行时内存分布</h3><ul>
-<li>程序计数器 用来记录指令执行的行数</li>
-<li>JVM栈 线程运行时执行过程，入栈和出栈</li>
-<li>本地方法栈 用来执行native方法</li>
-<li>堆 存储对象 1.8以上加入常量池</li>
-<li>方法区(&lt;1.8) 元数据(&gt;1.8)</li>
+        <p><strong>Zookeeper是分布式协作框架，主要是为了分布式系统数据管理，如：统一命名服务，状态同步服务，集群管理，分布式应用配置项管理等<br>Zookeeper=文件系统+通知机制</strong></p>
+<h4 id="节点类型"><a href="#节点类型" class="headerlink" title="节点类型"></a><strong>节点类型</strong></h4><p>zk维护了一个类似文件系统的数据结构，每一个节点是znode，也可以用来存储数据，有四种类型的zbode，区别在于客户端和服务端断开以后，临时节点是否会被删除，持久化节点不会，有序节点会在指定节点名称后加一长串数字，用来标识顺序</p>
+<ul>
+<li>持久化节点</li>
+<li>持久化有序节点</li>
+<li>临时节点</li>
+<li>临时有序节点  </li>
 </ul>
-<h3 id="堆的组成"><a href="#堆的组成" class="headerlink" title="堆的组成"></a>堆的组成</h3><ul>
-<li>新生代eden</li>
-<li>老年代old</li>
-<li>持久代perm</li>
+<p><strong>临时节点只能是子节点，把临时节点作为主节点添加子节点，会报NoChildrenForEphemerals错误</strong></p>
+<h4 id="状态信息"><a href="#状态信息" class="headerlink" title="状态信息"></a><strong>状态信息</strong></h4><blockquote>
+<p>[zk: localhost:2181(CONNECTED) 5] get /zk_test<br>test_data<br>cZxid = 0x4000092ec<br>12<br>ctime = Thu Mar 07 10:34:59 CST 2019<br>mZxid = 0x4000092ec<br>mtime = Thu Mar 07 10:34:59 CST 2019<br>pZxid = 0x4000092ec<br>cversion = 0<br>dataVersion = 0<br>aclVersion = 0<br>ephemeralOwner = 0x0<br>dataLength = 12<br>numChildren = 0</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>状态属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cZxid</td>
+<td>数据节点创建时的事务ID</td>
+</tr>
+<tr>
+<td>ctime</td>
+<td>数据节点创建时的时间</td>
+</tr>
+<tr>
+<td>mZxid</td>
+<td>数据节点最后一次更新时的事务ID</td>
+</tr>
+<tr>
+<td>mtime</td>
+<td>数据节点最后一次更新时的时间</td>
+</tr>
+<tr>
+<td>pZxid</td>
+<td>数据节点的子节点列表最后一次被修改（是子节点列表变更，而不是子节点内容变更）时的事务ID</td>
+</tr>
+<tr>
+<td>cversion</td>
+<td>子节点的版本号</td>
+</tr>
+<tr>
+<td>dataVersion</td>
+<td>数据节点的版本号</td>
+</tr>
+<tr>
+<td>aclVersion</td>
+<td>数据节点的ACL版本号</td>
+</tr>
+<tr>
+<td>ephemeralOwner</td>
+<td>如果节点是临时节点，则表示创建该节点的会话的SessionID；如果节点是持久节点，则该属性值为0</td>
+</tr>
+<tr>
+<td>dataLength</td>
+<td>数据内容的长度</td>
+</tr>
+<tr>
+<td>numChildren</td>
+<td>数据节点当前的子节点个数</td>
+</tr>
+</tbody></table>
+<h4 id="版本"><a href="#版本" class="headerlink" title="版本"></a><strong>版本</strong></h4><p>zk为数据节点引入了版本，每个数据节点都有三个版本</p>
+<table>
+<thead>
+<tr>
+<th>版本类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>version</td>
+<td>当前数据节点内容的版本号</td>
+</tr>
+<tr>
+<td>cversion</td>
+<td>当前数据节点子节点的版本号</td>
+</tr>
+<tr>
+<td>aversion</td>
+<td>当前数据节点ACL变更版本号</td>
+</tr>
+</tbody></table>
+<p><strong>这些版本都是一个从0开始累加的数字，代表了被更新的次数</strong></p>
+<h4 id="通知机制"><a href="#通知机制" class="headerlink" title="通知机制"></a><strong>通知机制</strong></h4><p>客户端注册监听它关心的节点目录，当目录节点发生变化(数据改变，被删除，子目录节点增加删除)时，zk会通知客户端</p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a><strong>使用场景</strong></h4><ul>
+<li>命名服务 每个path都是唯一的，通过path就能互相发现</li>
+<li>配置管理 当做配置中心，把配置存储在这，当配置变化时，通知客户端</li>
+<li>集群管理 机器的接入退出，选举master，采用临时节点做provider，选主可以用临时有序，编号小的作为master</li>
+<li>分布式锁<ul>
+<li>独占锁：都去创建节点/XXX，谁创建成功就持有锁，用完删除</li>
+<li>控制时序：先创建/parent，然后都在这个节点下面去创建新节点，序号小的优先</li>
 </ul>
+</li>
+<li>队列管理 <ul>
+<li>同步队列 要所有的都到齐了，才继续进行</li>
+<li>FIFO队列 创建临时有序节点，入列有编号，按编号出列</li>
+</ul>
+</li>
+</ul>
+<h4 id="数据复制"><a href="#数据复制" class="headerlink" title="数据复制"></a><strong>数据复制</strong></h4><ul>
+<li>容错 一个节点down，其他节点接管工作</li>
+<li>提高系统扩展能力 把负载分布到多节点上，或者增加节点，提高程序的抗压能力</li>
+<li>提高性能 客户端就近访问节点</li>
+<li>一般数据复制方式<ul>
+<li>写主WriteMater</li>
+<li>写任意WriteAny  </li>
+</ul>
+</li>
+</ul>
+<p><strong>zk使用的是写任意，修改任意一个节点的数据，会同步给其他节点，这个就涉及到如何保证数据一致性</strong></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎一起讨论 </span>
